@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "Сандали",
+    "color": "red",
+    "issueDate": "2018-01-31",
+    "price": 25.12,
+    "rating": 5,
+    "inStock": true,
+    "image": "https://source.unsplash.com/200x200/?food"
+  }
+]
