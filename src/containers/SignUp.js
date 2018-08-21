@@ -5,17 +5,21 @@ export default class SignUp extends React.Component {
 
   saveUser = (e) => {
     e.preventDefault();
-    console.log(e.target['email'].value);
-    console.log(e.target['password'].value);
-    console.log(e.target['confirmPassword'].value);
-    console.log(this.props);
+    const email = e.target['email'].value;
+    const password = e.target['password'].value;
 
-    this.props.history.push('/search');
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    if (users.some(user => user.email === email)) {
+      console.log('Такой пользователь уже есть');
+    } else {
+      localStorage.setItem('users', JSON.stringify([...users, { email, password }]));
+      this.props.history.push('/');
+    }
   };
 
   render () {
     return (
-      <Form onSubmit={this.saveUser}>
+      <Form onSubmit={ this.saveUser }>
         <FormGroup row>
           <Label for="exampleEmail" sm={ 2 }>Email</Label>
           <Col sm={ 5 }>
