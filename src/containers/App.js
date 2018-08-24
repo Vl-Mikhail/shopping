@@ -30,14 +30,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 const App = () => {
   return (
-    <Router>
-      <div>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/singup" component={SingUp} />
-          <PrivateRoute path="/search/:user" component={Search} />
-        </Switch>
-      </div>
+    <Router basename={process.env.PUBLIC_URL}>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/singup" component={SingUp} />
+        <PrivateRoute path="/search/:user" component={Search} />
+      </Switch>
     </Router>
   );
 };

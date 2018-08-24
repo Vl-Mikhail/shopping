@@ -25,6 +25,11 @@ export default class Login extends React.Component {
     const email = e.target["email"].value;
     const password = e.target["password"].value;
 
+    if (!users) {
+      this.setState({ error: "Такого пользователя не существует" });
+      return;
+    }
+
     const user = users.find(user => user.email === email);
     if (user) {
       if (bcrypt.compareSync(password, user.hash)) {
