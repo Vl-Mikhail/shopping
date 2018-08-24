@@ -2,11 +2,45 @@
   {
     "id": 1,
     "name": "Сандали",
-    "color": "red",
-    "issueDate": "2018-01-31",
+    "color": "зеленый",
+    "issueDate": "2018-09-31",
     "price": 25.12,
     "rating": 5,
     "inStock": true,
-    "image": "https://source.unsplash.com/200x200/?food"
+    "image": "https://source.unsplash.com/200x200/?shoose",
+    "user": "aa@m.com"
+  },
+  {
+    "id": 2,
+    "name": "Сандали",
+    "color": "зеленый",
+    "issueDate": "2018-08-31",
+    "price": 21,
+    "rating": 5,
+    "inStock": true,
+    "image": "https://source.unsplash.com/200x200/?shoose",
+    "user": "aa@m.com"
+  },
+  {
+    "id": 3,
+    "name": "Сандали",
+    "color": "красный",
+    "issueDate": "2018-08-20",
+    "price": 25.45,
+    "rating": 5,
+    "inStock": true,
+    "image": "https://source.unsplash.com/200x200/?shoose",
+    "user": "aa@m.com"
+  },
+  {
+    "id": 4,
+    "name": "Сандали",
+    "color": "голубой",
+    "issueDate": "2018-10-31",
+    "price": 45,
+    "rating": 5,
+    "inStock": false,
+    "image": "https://source.unsplash.com/200x200/?shoose",
+    "user": ""
   }
 ]

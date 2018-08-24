@@ -1,46 +1,38 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import ItemList from "./ItemList";
 
 class Popup extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: false
-    };
+  state = {
+    modal: false
+  };
 
-    this.toggle = this.toggle.bind(this);
-  }
-
-  toggle() {
+  toggle = () => {
     this.setState({
       modal: !this.state.modal
     });
-  }
+  };
 
   render() {
+    const { items, buttonLabel } = this.props;
+
     return (
       <div>
-        <Button color="danger" onClick={this.toggle}>
-          {this.props.buttonLabel}
+        <Button color="link" onClick={this.toggle}>
+          {buttonLabel}
         </Button>
-        <Modal
-          isOpen={this.state.modal}
-          toggle={this.toggle}
-          className={this.props.className}
-        >
-          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+          <ModalHeader toggle={this.toggle}>Список товаров</ModalHeader>
           <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip
+            <ItemList items={items} />
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.toggle}>
-              Do Something
+              Оформить
             </Button>{" "}
             <Button color="secondary" onClick={this.toggle}>
-              Cancel
+              Отмена
             </Button>
           </ModalFooter>
         </Modal>
@@ -48,5 +40,15 @@ class Popup extends React.Component {
     );
   }
 }
+
+Popup.propTypes = {
+  items: PropTypes.array,
+  buttonLabel: PropTypes.string
+};
+
+Popup.defaultProps = {
+  items: [],
+  buttonLabel: ""
+};
 
 export default Popup;

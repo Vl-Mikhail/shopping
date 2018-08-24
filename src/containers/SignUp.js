@@ -1,51 +1,105 @@
-import React from 'react';
-import { Button, Col, Form, FormGroup, Input, Label } from 'reactstrap';
+import React from "react";
+import {
+  Alert,
+  Button,
+  Col,
+  Container,
+  Form,
+  FormGroup,
+  Input,
+  Label
+} from "reactstrap";
+import bcrypt from "bcryptjs";
 
 export default class SignUp extends React.Component {
+  state = {
+    error: ""
+  };
 
-  saveUser = (e) => {
+  saveUser = e => {
     e.preventDefault();
-    const email = e.target['email'].value;
-    const password = e.target['password'].value;
+    const email = e.target["email"].value;
+    const password = e.target["password"].value;
+    const confirmPassword = e.target["confirmPassword"].value;
 
-    const users = JSON.parse(localStorage.getItem('users')) || [];
+    if (!email || !password || !confirmPassword) {
+      this.setState({ error: "Поля не должны быть пустые" });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      this.setState({ error: "Пароли не совпадают" });
+      return;
+    }
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
     if (users.some(user => user.email === email)) {
-      console.log('Такой пользователь уже есть');
+      this.setState({ error: "Такой пользователь уже есть" });
     } else {
-      localStorage.setItem('users', JSON.stringify([...users, { email, password }]));
-      this.props.history.push('/');
+      const salt = bcrypt.genSaltSync(process.env.SALT);
+      const hash = bcrypt.hashSync(password, salt);
+
+      localStorage.setItem(
+        "users",
+        JSON.stringify([...users, { email, hash }])
+      );
+      this.props.history.push("/");
     }
   };
 
-  render () {
+  render() {
+    const { error } = this.state;
+
     return (
-      <Form onSubmit={ this.saveUser }>
-        <FormGroup row>
-          <Label for="exampleEmail" sm={ 2 }>Email</Label>
-          <Col sm={ 5 }>
-            <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder"/>
-          </Col>
-        </FormGroup>
-
-        <FormGroup row>
-          <Label for="examplePassword" sm={ 2 }>Пароль</Label>
-          <Col sm={ 5 }>
-            <Input type="password" name="password" id="examplePassword" placeholder="password placeholder"/>
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label for="examplePassword" sm={ 2 }>Подтвердите пароль</Label>
-          <Col sm={ 5 }>
-            <Input type="password" name="confirmPassword" id="confirmPassword" placeholder="password placeholder"/>
-          </Col>
-        </FormGroup>
-
-        <FormGroup check row>
-          <Col sm={ { size: 10, offset: 2 } }>
-            <Button>Submit</Button>
-          </Col>
-        </FormGroup>
-      </Form>
+      <Container className="mt-5">
+        {error && <Alert color="danger">{error}</Alert>}
+        <Form onSubmit={this.saveUser}>
+          <FormGroup row>
+            <Label for="exampleEmail" sm={2}>
+              Email
+            </Label>
+            <Col sm={5}>
+              <Input
+                type="email"
+                name="email"
+                id="Email"
+                placeholder="Введите email"
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup row>
+            <Label for="Password" sm={2}>
+              Пароль
+            </Label>
+            <Col sm={5}>
+              <Input
+                type="password"
+                name="password"
+                id="Password"
+                placeholder="Введите пароль"
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup row>
+            <Label for="examplePassword" sm={2}>
+              Подтвердите пароль
+            </Label>
+            <Col sm={5}>
+              <Input
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                placeholder="Павторите пароль"
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup check row>
+            <Col sm={{ size: 10, offset: 2 }}>
+              <Button>Зарегистрироваться</Button>
+            </Col>
+          </FormGroup>
+        </Form>
+      </Container>
     );
   }
 }

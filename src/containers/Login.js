@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Alert,
   Button,
   Col,
   Container,
@@ -10,9 +11,14 @@ import {
   Row
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import bcrypt from "bcryptjs";
 import { fakeAuth } from "../common/api";
 
 export default class Login extends React.Component {
+  state = {
+    error: ""
+  };
+
   saveUser = e => {
     e.preventDefault();
     const users = JSON.parse(localStorage.getItem("users"));
@@ -21,19 +27,24 @@ export default class Login extends React.Component {
 
     const user = users.find(user => user.email === email);
     if (user) {
-      if (user.password === password) {
-        fakeAuth.authenticate(() => this.props.history.push("/search"));
+      if (bcrypt.compareSync(password, user.hash)) {
+        fakeAuth.authenticate(() =>
+          this.props.history.push(`/search/${user.email}`)
+        );
       } else {
-        console.log("Неверный пароль");
+        this.setState({ error: "Неверный пароль" });
       }
     } else {
-      console.log("Такого пользователя не существует");
+      this.setState({ error: "Такого пользователя не существует" });
     }
   };
 
   render() {
+    const { error } = this.state;
+
     return (
-      <Container>
+      <Container className="mt-5">
+        {error && <Alert color="danger">{error}</Alert>}
         <Form onSubmit={this.saveUser}>
           <FormGroup row>
             <Col sm={4}>
