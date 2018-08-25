@@ -75,7 +75,7 @@ export default class Login extends React.Component {
           </FormGroup>
           <FormGroup row>
             <Col sm={4}>
-              <Button>Submit</Button>
+              <Button color="success">Войти</Button>
             </Col>
           </FormGroup>
         </Form>

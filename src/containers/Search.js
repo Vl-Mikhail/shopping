@@ -96,8 +96,8 @@ export default class Search extends React.Component {
       <Fragment>
         <Container className="mt-2">
           <Row>
-            <Col style={{ alignSelf: "center" }}>
-              <h3>{`Авторизированный ${user.name}`}</h3>
+            <Col>
+              <h4>{`Авторизированный ${user.name}`}</h4>
             </Col>
             <Col>
               <Popup

@@ -52,6 +52,7 @@ export default class SignUp extends React.Component {
 
     return (
       <Container className="mt-5">
+        <h2>Форма регистрации</h2>
         {error && <Alert color="danger">{error}</Alert>}
         <Form onSubmit={this.saveUser}>
           <FormGroup row>
@@ -95,7 +96,7 @@ export default class SignUp extends React.Component {
           </FormGroup>
           <FormGroup check row>
             <Col sm={{ size: 10, offset: 2 }}>
-              <Button>Зарегистрироваться</Button>
+              <Button color='success'>Зарегистрироваться</Button>
             </Col>
           </FormGroup>
         </Form>
